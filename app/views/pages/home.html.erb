@@ -1,8 +1,8 @@
 <% content_for :head do %>
-  <title>Reminder Randall — I want to stop missing things</title>
-  <meta name="description" content="Randall blasts you across iMessage, WhatsApp, a phone call, and email when a meeting starts and you haven't joined — and stops the second you reply IN. No bot ever joins your calls.">
-  <meta property="og:title" content="Reminder Randall — I want to stop missing things">
-  <meta property="og:description" content="Blasts you until you show up. Stops the moment you reply IN. No bot ever joins your calls.">
+  <title>Reminder Randall — Stop missing things</title>
+  <meta name="description" content="Randall blasts you across your preferred channels until you tell him you're going or you have to cancel. Slack, iMessage, email, whatever floats your boat. No bot ever joins your calls.">
+  <meta property="og:title" content="Reminder Randall — Stop missing things">
+  <meta property="og:description" content="Blasts you across your preferred channels until you tell him you're going or you have to cancel. No bot ever joins your calls.">
   <meta property="og:type" content="website">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,11 +54,14 @@
       font-size: clamp(28px, 5vw, 48px);
       max-width: 18ch; margin: 0 0 22px;
     }
+    h1.statement .line { display: block; }
     .word {
-      display: inline-block; color: var(--teal); font-weight: 600;
+      display: block; color: var(--teal); font-weight: 600;
       transition: opacity .22s ease, transform .22s ease;
     }
     .word.swap { opacity: 0; transform: translateY(8px); }
+
+    .sub { color: var(--muted); font-size: 18px; max-width: 42ch; margin: 0 0 30px; }
 
     .kicker {
       font-family: "Fredoka", sans-serif;
@@ -91,7 +94,9 @@
     <img src="/mascot.svg" alt="Reminder Randall, a claymation-style character in glasses, standing next to a tall stack of reminder papers">
   </div>
 
-  <h1 class="statement">I want to stop missing <span class="word" id="word">meetings</span></h1>
+  <h1 class="statement"><span class="line">Stop missing</span><span class="word" id="word">meetings</span></h1>
+
+  <p class="sub">Randall blasts you across your preferred channels until you tell him you're going or you have to cancel. Slack, iMessage, email, whatever floats your boat.</p>
 
   <p class="kicker">What Randall is designed for</p>
   <p class="story">I have meetings every day, and not all of them are on the same calendar — and not all of them are related to the same business, or have any correlation at all. Sometimes I'm double-booked, or deep in work on something unrelated to the first task, and I miss something. Missing something always feels shitty, so I designed an idiot-proof reminder system for myself. Think of the shaking bed alarm clock, but for people with ADHD. Now I have Randall to remind me aggressively of upcoming engagements — dial his aggressiveness up or down as you see fit.</p>
