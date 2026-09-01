@@ -1,0 +1,296 @@
+<% content_for :head do %>
+  <title>Meeting Mack — the open-source meeting enforcer</title>
+  <meta name="description" content="Mack blasts you across iMessage, WhatsApp, a phone call, and email when a meeting starts and you haven't joined — and stops the second you reply IN. No bot ever joins your calls.">
+  <meta property="og:title" content="Meeting Mack — the open-source meeting enforcer">
+  <meta property="og:description" content="Blasts you until you show up. Stops the moment you reply IN. No bot ever joins your calls.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --paper: #faf9f6;
+      --ink: #1c1b18;
+      --muted: #605d55;
+      --line: #e6e1d7;
+      --accent: #e0332f;         /* Mack red — blast/alarm */
+      --accent-hover: #c22622;
+      --navy: #141327;
+      --navy-2: #1c1a38;
+      --on-navy: #cfcde4;
+      --measure: 660px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--paper); color: var(--ink);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 19px; line-height: 1.65; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); }
+
+    .btn {
+      display: inline-block; text-decoration: none; cursor: pointer;
+      font-family: inherit; font-weight: 600; font-size: 15px;
+      padding: 10px 20px; border-radius: 999px; white-space: nowrap; border: 1.5px solid transparent;
+      transition: transform .06s ease, background .15s ease, color .15s ease, border-color .15s ease;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn-red { background: var(--accent); color: #fff; }
+    .btn-red:hover { background: var(--accent-hover); }
+    .btn-dark { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    .btn-dark:hover { background: #000; }
+    .btn-line-light { background: transparent; color: #fff; border-color: rgba(255,255,255,.28); }
+    .btn-line-light:hover { border-color: #fff; }
+    .btn-line-dark { background: transparent; color: var(--ink); border-color: var(--line); }
+    .btn-line-dark:hover { border-color: var(--ink); }
+    .btn-lg { font-size: 17px; padding: 13px 26px; }
+
+    /* ================= DARK TOP ================= */
+    .dark { background: var(--navy); color: #fff; }
+
+    nav {
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 22px;
+      max-width: none; margin: 0; padding: 18px 32px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 10px; justify-self: start;
+      font-weight: 700; font-size: 23px; letter-spacing: -0.02em; text-decoration: none; color: #fff;
+    }
+    .brand .glove { font-size: 26px; line-height: 1; }
+    .nav-line {
+      font-family: "Fraunces", Georgia, serif;
+      text-align: center; font-size: clamp(15px, 1.2vw, 21.5px); font-weight: 700; color: #fff;
+      line-height: 1.2; letter-spacing: -0.01em; white-space: nowrap;
+    }
+    .nav-buttons { display: flex; gap: 12px; justify-self: end; }
+    .nav-buttons .btn { font-size: 18px; padding: 12px 24px; }
+
+    /* hero */
+    .hero { max-width: 780px; margin: 0 auto; padding: 46px 28px 8px; text-align: center; }
+    .kicker { color: #ff8a7d; font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 18px; }
+    h1 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(42px, 6.6vw, 70px); line-height: 1.0; letter-spacing: -0.02em; font-weight: 600;
+      margin: 0 auto 22px; max-width: 15ch; color: #fff;
+    }
+    h1 em { font-style: italic; font-weight: 500; }
+    .hero .sub { color: var(--on-navy); font-size: 21px; max-width: 44ch; margin: 0 auto 30px; }
+    .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .hero .note { color: #8f8cae; font-size: 13.5px; margin-top: 14px; }
+
+    /* ---- escalation thread mock ("product shot") ---- */
+    .thread {
+      max-width: 460px; margin: 46px auto 0; text-align: left;
+      background: #fff; color: #1c1c1c; border-radius: 20px; overflow: hidden;
+      box-shadow: 0 34px 70px -24px rgba(0,0,0,.6), 0 10px 24px -12px rgba(0,0,0,.5);
+      font-size: 15px;
+    }
+    .thread-top { display: flex; align-items: center; gap: 8px; padding: 14px 18px; border-bottom: 1px solid #ececec; font-weight: 700; }
+    .thread-top .live { margin-left: auto; font-size: 12px; font-weight: 500; color: var(--accent); display: flex; align-items: center; gap: 6px; }
+    .thread-top .live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; }
+    .msg { display: grid; grid-template-columns: 34px 1fr; gap: 10px; padding: 13px 18px; }
+    .msg + .msg { border-top: 1px solid #f3f3f3; }
+    .ava { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 15px; background: var(--ink); }
+    .ava.mack { background: var(--accent); }
+    .who { font-weight: 700; font-size: 14px; margin-bottom: 3px; }
+    .who .t { color: #9b9b9b; font-weight: 400; font-size: 12px; margin-left: 6px; }
+    .chan { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; margin-left: 6px; vertical-align: 1px; background: #f1e2e1; color: var(--accent-hover); }
+    .msg .body { color: #1d1c1d; line-height: 1.5; }
+    .msg .body.ack { color: #0a8a4c; font-weight: 600; }
+
+    /* ---- letter card on the navy ---- */
+    .letter-wrap { padding: 56px 28px 90px; }
+    .letter {
+      max-width: var(--measure); margin: 0 auto; background: #fff; color: var(--ink);
+      border-radius: 18px; padding: 44px 48px; text-align: left;
+      box-shadow: 0 24px 50px -22px rgba(0,0,0,.5);
+    }
+    .letter p { margin: 0 0 20px; }
+    .letter p.indent { text-indent: 2.2em; }
+    .letter p:first-child { margin-top: 0; }
+    .sig { margin-top: 28px; }
+    .sig .name { font-family: "Instrument Serif", serif; font-style: italic; font-size: 27px; line-height: 1; }
+    .sig .role { color: var(--muted); font-size: 15px; margin-top: 6px; }
+
+    /* ================= LIGHT ================= */
+    main { max-width: var(--measure); margin: 0 auto; padding: 78px 24px 0; }
+    section { text-align: center; }
+    section + section { margin-top: 30px; padding-top: 60px; border-top: 1px solid var(--line); }
+    h2 { font-family: "Fraunces", Georgia, serif; font-size: clamp(29px, 4.5vw, 40px); line-height: 1.08; letter-spacing: -0.02em; font-weight: 600; margin: 0 0 14px; }
+    h2 em { font-style: italic; font-weight: 500; }
+    section > p.lead { color: var(--muted); font-size: 20px; max-width: 46ch; margin: 0 auto 30px; }
+
+    ul.things { list-style: none; padding: 0; margin: 30px 0 0; text-align: left; }
+    ul.things li {
+      padding: 20px 6px; border-top: 1px solid var(--line);
+      display: flex; align-items: center; gap: 18px;
+    }
+    ul.things li:last-child { border-bottom: 1px solid var(--line); }
+    ul.things .ico { font-size: clamp(28px, 3.4vw, 34px); line-height: 1; width: 42px; text-align: center; flex: none; }
+    ul.things b { font-weight: 700; font-size: clamp(22px, 3.1vw, 31px); letter-spacing: -0.02em; }
+
+    .codeline {
+      display: inline-flex; align-items: center; gap: 12px; background: var(--ink); color: var(--paper);
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 15px;
+      padding: 12px 18px; border-radius: 10px; margin: 8px 0 26px;
+    }
+    .codeline .pmt { color: #8a8781; }
+    .center-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    .faq { text-align: left; margin-top: 24px; }
+    .faq details { border-top: 1px solid var(--line); }
+    .faq details:last-child { border-bottom: 1px solid var(--line); }
+    .faq summary {
+      list-style: none; cursor: pointer; padding: 20px 4px;
+      font-weight: 600; font-size: 19px; letter-spacing: -0.01em;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: "+"; font-size: 26px; font-weight: 400; line-height: 1; color: var(--muted); flex: none;
+    }
+    .faq details[open] summary::after { content: "\2212"; }
+    .faq details p { margin: -4px 4px 22px; color: var(--muted); font-size: 17px; max-width: 58ch; }
+
+    footer { margin-top: 76px; border-top: 1px solid var(--line); }
+    .colophon { max-width: var(--measure); margin: 0 auto; padding: 40px 24px 60px; color: var(--muted); font-size: 15px; text-align: center; }
+    .colophon .foot-glove { font-size: 34px; display: block; margin: 0 auto 14px; }
+    .colophon a { color: var(--ink); text-decoration: none; font-weight: 600; }
+    .colophon a:hover { color: var(--accent); }
+    .colophon .links { margin-top: 14px; display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; }
+
+    @media (max-width: 720px) {
+      nav { grid-template-columns: auto auto; padding: 14px 18px; }
+      .nav-line { display: none; }
+      .letter { padding: 32px 24px; }
+    }
+  </style>
+<% end %>
+
+<!-- ============ DARK: top bar + hero + thread + letter ============ -->
+<div class="dark" id="top">
+  <nav>
+    <a class="brand" href="#top"><span class="glove">🥊</span>Meeting Mack</a>
+    <p class="nav-line">He doesn't take notes or join your calls. He just makes sure you show up.</p>
+    <div class="nav-buttons">
+      <a class="btn btn-line-light" href="https://github.com/NicolasMauro/meeting-mack">View on GitHub</a>
+      <a class="btn btn-red" href="https://github.com/NicolasMauro/meeting-mack">Get started</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <p class="kicker">Open-source meeting enforcer</p>
+    <h1>Skip it, <em>he blasts you.</em></h1>
+    <p class="sub">iMessage, WhatsApp, a phone call, then email — Mack escalates until you reply IN. No bot ever joins your calls.</p>
+    <div class="hero-cta">
+      <a class="btn btn-red btn-lg" href="https://github.com/NicolasMauro/meeting-mack">Get Mack</a>
+      <a class="btn btn-line-light btn-lg" href="#open-source">See how it works</a>
+    </div>
+    <p class="note">MIT licensed · No in-room bot · Runs on your own keys</p>
+  </header>
+
+  <!-- escalation thread mock -->
+  <figure class="thread">
+    <div class="thread-top">Standup — 9:00 AM <span class="live">ESCALATING</span></div>
+    <div class="msg">
+      <div class="ava mack">M</div>
+      <div>
+        <div class="who">Mack <span class="t">9:02 AM</span> <span class="chan">Check-in</span></div>
+        <div class="body">You in Standup? Reply IN to kill this.</div>
+      </div>
+    </div>
+    <div class="msg">
+      <div class="ava mack">M</div>
+      <div>
+        <div class="who">Mack <span class="t">9:04 AM</span> <span class="chan">WhatsApp</span></div>
+        <div class="body">Still don't see you. Calling your phone next.</div>
+      </div>
+    </div>
+    <div class="msg">
+      <div class="ava mack">M</div>
+      <div>
+        <div class="who">Mack <span class="t">9:05 AM</span> <span class="chan">Call</span></div>
+        <div class="body">☎️ Calling Nicolas…</div>
+      </div>
+    </div>
+    <div class="msg">
+      <div class="ava">N</div>
+      <div>
+        <div class="who">Nicolas <span class="t">9:05 AM</span></div>
+        <div class="body ack">IN — sorry, joining now 🏃</div>
+      </div>
+    </div>
+  </figure>
+
+  <div class="letter-wrap">
+    <div class="letter">
+      <p>I used to miss meetings constantly. Not because I didn't care — I just didn't see the notification, or I was heads-down in something else and the calendar ping got buried under six Slack threads.</p>
+      <p class="indent">So I built something dumb-simple: watch my calendar, and if a meeting starts and I'm not in it, escalate. First a check-in text. Then WhatsApp. Then it calls my phone. Then it emails whoever it needs to. It does not stop until I reply IN.</p>
+      <p class="indent">No bot sits in my calls listening. No AI takes notes I did not ask for. It has exactly one job — make sure I show up — and it does not do anything else.</p>
+      <p class="indent">Now anyone can run their own Mack. It's yours, on your own keys, on your own servers.</p>
+      <div class="sig">
+        <div class="name">Nicolas Mauro</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ LIGHT ============ -->
+<main>
+  <section>
+    <h2>Little things, <em>big difference.</em></h2>
+    <ul class="things">
+      <li><span class="ico">🔔</span><b>Checks in before he blasts</b></li>
+      <li><span class="ico">📱</span><b>iMessage → WhatsApp → Call → Email</b></li>
+      <li><span class="ico">🙅</span><b>Never joins your calls</b></li>
+      <li><span class="ico">🕵️</span><b>Auto-detects you if you're hosting</b></li>
+      <li><span class="ico">✅</span><b>Stops the second you reply IN</b></li>
+      <li><span class="ico">🔓</span><b>Fully open source</b></li>
+    </ul>
+  </section>
+
+  <section id="open-source">
+    <h2>One more thing… <em>he's open source.</em></h2>
+    <div class="codeline"><span class="pmt">$</span> git clone https://github.com/NicolasMauro/meeting-mack</div>
+    <div class="center-cta">
+      <a class="btn btn-dark btn-lg" href="https://github.com/NicolasMauro/meeting-mack">View source</a>
+      <a class="btn btn-line-dark btn-lg" href="https://github.com/NicolasMauro/meeting-mack#readme">Read the docs</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>FAQ</h2>
+    <div class="faq">
+      <details>
+        <summary>Does a bot join my calls?</summary>
+        <p>No. Never. Mack watches your calendar and checks in with you directly — he does not sit in your meetings.</p>
+      </details>
+      <details>
+        <summary>How does he reach me?</summary>
+        <p>iMessage, WhatsApp, a phone call, and email, in whatever order you set. He stops climbing the list the moment you reply IN.</p>
+      </details>
+      <details>
+        <summary>What if I'm the one hosting?</summary>
+        <p>For meetings you host, Mack can read the provider's participant list to see you've joined and stay silent — no ping needed.</p>
+      </details>
+      <details>
+        <summary>Is it really free?</summary>
+        <p>Yes. It's MIT licensed. Self-host it on your own server with your own iMessage, Twilio, and SMTP keys.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="colophon">
+    <span class="foot-glove">🥊</span>
+    <div><b>Meeting Mack</b> is open source, built by <a href="https://github.com/NicolasMauro">Nicolas Mauro</a>.</div>
+    <div class="links">
+      <a href="https://github.com/NicolasMauro/meeting-mack">GitHub</a>
+      <a href="https://github.com/NicolasMauro/meeting-mack/blob/main/LICENSE">License</a>
+    </div>
+  </div>
+</footer>
