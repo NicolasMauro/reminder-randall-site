@@ -25,12 +25,9 @@ RUN apt-get update -qq && \
 
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile -j 1 --gemfile
+    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 
 COPY . .
-
-RUN bundle exec bootsnap precompile -j 1 app/ lib/
 
 RUN chmod +x bin/* && \
     sed -i "s/\r$//g" bin/* && \
