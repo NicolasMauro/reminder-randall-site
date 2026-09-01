@@ -11,9 +11,10 @@
 
   <style>
     :root {
-      --paper: #faf9f6;
-      --ink: #1c1b18;
-      --muted: #605d55;
+      --paper: #ffffff;
+      --ink: #211533;
+      --muted: #6e6580;
+      --purple: #6d28d9;
       --accent: #e0332f;
       --accent-hover: #c22622;
     }
@@ -28,7 +29,7 @@
     .brand {
       position: fixed; top: 24px; left: 28px;
       display: flex; align-items: center; gap: 8px;
-      font-weight: 700; font-size: 18px; letter-spacing: -0.02em; text-decoration: none; color: var(--ink);
+      font-weight: 700; font-size: 18px; letter-spacing: -0.02em; text-decoration: none; color: var(--purple);
     }
     .brand .glove { font-size: 20px; line-height: 1; }
 
@@ -40,7 +41,7 @@
 
     /* placeholder character face — swap for real mascot art later */
     .face { margin: 0 0 34px; }
-    .face svg { display: block; filter: drop-shadow(0 20px 30px rgba(224,51,47,.28)); }
+    .face svg { display: block; filter: drop-shadow(0 20px 30px rgba(109,40,217,.3)); }
 
     h1.statement {
       font-family: "Fraunces", Georgia, serif;
@@ -80,7 +81,7 @@
   <!-- placeholder character face — swap for real mascot art later -->
   <div class="face">
     <svg viewBox="0 0 200 200" width="176" height="176" aria-hidden="true">
-      <circle cx="100" cy="100" r="96" fill="var(--accent)" />
+      <circle cx="100" cy="100" r="96" fill="var(--purple)" />
       <circle cx="70" cy="88" r="10" fill="#fff" />
       <circle cx="130" cy="88" r="10" fill="#fff" />
       <path d="M68 128 Q100 152 132 128" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round" />
