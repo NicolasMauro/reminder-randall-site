@@ -1,4 +1,4 @@
-app = "meeting-mack-site"
+app = "reminder-randall-site"
 primary_region = "iad"
 
 [build]

@@ -1,6 +1,6 @@
-# Meeting Mack — site
+# Reminder Randall — site
 
-Marketing site for [Meeting Mack](https://github.com/NicolasMauro/meeting-mack). One controller, one view, no database.
+Marketing site for [Reminder Randall](https://github.com/NicolasMauro/reminder-randall). One controller, one view, no database.
 
 ```bash
 bin/dev   # http://localhost:3000
